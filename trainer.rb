@@ -22,14 +22,12 @@ class Trainer < Person
 
   def calc_body_mass_index(client)
 
-    puts "Calculate BMI for #{client.first_name} #{client.last_name}"
-    puts "Height #{client.height}"
-    puts "Weight #{client.weight}"
+    puts "Calculate BMI for #{client.first_name} #{client.last_name}:"
 
     # Body Mass Index is defined as the body mass divided by the square of the body height
     bmi = (client.weight / ((client.height * 0.01) ** 2)).round
 
-    puts "Client's BMI is #{bmi}"
+    puts "Based on height #{client.height} and weight #{client.weight}, client's BMI = #{bmi}"
 
     case bmi
 
@@ -44,6 +42,14 @@ class Trainer < Person
       when bmi > 40
         puts 'Morbidly Obese'
     end
+
+    bmi
+
+  end
+
+  def prepare_diet_tips(bmi)
+
+    puts "Taking into consideration client's BMI = #{bmi}, next tips & advices are assumed:"
 
   end
 end
