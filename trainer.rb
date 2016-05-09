@@ -22,7 +22,9 @@ class Trainer < Person
 
   def calc_body_mass_index(client)
 
-    puts "Calculate BMI for #{client.first_name} #{client.last_name}:"
+    client_first_name = client.first_name
+
+    puts "Calculate BMI for #{client_first_name} #{client.last_name}:"
 
     # Body Mass Index is defined as the body mass divided by the square of the body height
     bmi = (client.weight / ((client.height * 0.01) ** 2)).round
@@ -32,15 +34,15 @@ class Trainer < Person
     case bmi
 
       when 0...18.5
-        puts 'Under Weight'
+        puts "#{client_first_name} is underweight currently"
       when 18.5..24.9
-        puts 'Normal Weight'
+        puts "#{client_first_name} has normal weight currently"
       when 25..29.9
-        puts 'Over Weight'
+        puts "#{client_first_name} is overweight currently"
       when 30..39.99
-        puts 'Obese'
+        puts "#{client_first_name} is obese currently"
       when bmi > 40
-        puts 'Morbidly Obese'
+        puts "#{client_first_name} is morbidly obese"
     end
 
     bmi
@@ -49,7 +51,35 @@ class Trainer < Person
 
   def prepare_diet_tips(bmi)
 
-    puts "Taking into consideration client's BMI = #{bmi}, next tips & advices are assumed:"
+    diet_type = choose_diet(bmi)
+
+    puts "For #{diet_type}, next tips & advices are assumed:"
 
   end
+
+  protected
+
+  def choose_diet(bmi)
+
+    diet = { weight_loss: 'Weight Loss',
+             mass_gain: 'Gaining Weight',
+             balanced: 'Balanced Nutrition'}
+
+    case bmi
+
+      when 0...18.5
+        diet_type = diet[:mass_gain]
+      when 18.5..24.9
+        diet_type = diet[:balanced]
+      else
+        diet_type = diet[:weight_loss]
+
+    end
+
+    puts "Taking into consideration client's BMI = #{bmi} your diet plan is '#{diet_type}'"
+
+    diet_type
+
+  end
+
 end
